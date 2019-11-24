@@ -5,7 +5,11 @@ pipeline {
         PROJECT_NAME = 'jenkins_node_example'
         DISABLE_AUTH = 'true'
         DB_ENGINE    = 'sqlite'
-        // GCR_PROJECT_ID   = 'crowde-apps-258709'
+        GCR_PROJECT_ID   = 'crowde-apps-258709'
+        CLUSTER_NAME = 'staging'
+        LOCATION = 'us-central1-a'
+        CREDENTIALS_ID = 'gke'
+        NAMESPACE = 'staging'
     }
     stages {
         stage("Checkout code") {
@@ -32,6 +36,18 @@ pipeline {
                 }
             }
         } 
+        stage('Deploy to GKE') {
+            steps{
+                script {
+                    def tag = sh(returnStdout: true, script: "git describe --abbrev=0 --tags | sed 's/* //'").trim()
+                    sh "sed -i 's/${env.PROJECT_NAME}:latest/${env.PROJECT_NAME}:${tag}/g' deployment.yaml"
+                    step([$class: 'KubernetesEngineBuilder', nameSpace: env.NAMESPACE, projectId: env.GCR_PROJECT_ID, clusterName: env.CLUSTER_NAME, location: env.LOCATION, manifestPattern: 'deployment.yaml', credentialsId: env.CREDENTIALS_ID, verifyDeployments: true])
+                }
+            }
+        }
+
+
+        // TODO: push image to GCR
         // stage('Push images') {
         //     steps {
         //         script {
@@ -43,12 +59,6 @@ pipeline {
         //                 sh "docker push ${env.PROJECT_NAME}:${tag}"
         //             }
         //         }
-        //     }
-        // }
-        // stage('Deploy to GKE') {
-        //     steps{
-        //         sh "sed -i 's/hello:latest/hello:${env.BUILD_ID}/g' deployment.yaml"
-        //         step([$class: 'KubernetesEngineBuilder', projectId: env.PROJECT_ID, clusterName: env.CLUSTER_NAME, location: env.LOCATION, manifestPattern: 'deployment.yaml', credentialsId: env.CREDENTIALS_ID, verifyDeployments: true])
         //     }
         // }
     }
