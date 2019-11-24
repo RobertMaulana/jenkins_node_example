@@ -5,6 +5,7 @@ pipeline {
         PROJECT_NAME = 'jenkins_node_example'
         DISABLE_AUTH = 'true'
         DB_ENGINE    = 'sqlite'
+        GCR_PROJECT_ID   = 'crowde-apps-258709'
     }
     stages {
         stage('Build image') {
@@ -15,21 +16,23 @@ pipeline {
                 }
             }
         }
-        stage('GCR initialize authentication') {
-            steps {
-                script {
-                    sh "gcloud auth activate-service-account --key-file ./jenkins-kubernetes-admin.json"
-                    sh "gcloud auth configure-docker"
-                }
-            }
-        }
+        // stage('GCR initialize authentication') {
+        //     steps {
+        //         script {
+        //             sh "gcloud auth activate-service-account --key-file ./jenkins-kubernetes-admin.json"
+        //             sh "gcloud auth configure-docker"
+        //         }
+        //     }
+        // }
         stage('Push images') {
             steps {
                 script {
                     def tag = sh(returnStdout: true, script: "git describe --abbrev=0 --tags | sed 's/* //'").trim()
                     docker.withRegistry('https://gcr.io', 'gcr:staging-project') {
-                        buildImage.push("${NODE_LABELS}-${tag}")
-                        // buildImage.push("latest")
+                        sh "gcloud auth activate-service-account --key-file ./jenkins-kubernetes-admin.json"
+                        sh "gcloud auth configure-docker"
+                        echo "Pushing image To GCR"
+                        sh "docker push gcr.io/${env.GCR_PROJECT_ID}/${env.PROJECT_NAME}:${NODE_LABELS}-${tag}"
                     }
                 }
             }
