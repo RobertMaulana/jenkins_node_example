@@ -16,9 +16,13 @@ pipeline {
             }
         }
         stage('Push images') {
-            docker.withRegistry('https://gcr.io', 'gcr:google-container-registry-project') {
-                buildImage.push("${env.PROJECT_NAME}")
-                buildImage.push("${NODE_LABELS}")
+            steps {
+                script {
+                    docker.withRegistry('https://gcr.io', 'gcr:google-container-registry-project') {
+                        buildImage.push("${env.PROJECT_NAME}")
+                        buildImage.push("${NODE_LABELS}")
+                    }
+                }
             }
         }
         // stage('Deploy to GKE') {
