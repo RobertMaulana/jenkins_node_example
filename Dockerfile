@@ -3,9 +3,9 @@ FROM node:10
 # Create app directory
 WORKDIR /usr/src/app
 
-ENV GCR_PROJECT_ID=crowde-apps-258709
-ENV IMAGE_NAME=robertmaulana/jenkins_node_example
-ENV GCR_HOST=https://gcr.io
+# ENV GCR_PROJECT_ID=crowde-apps-258709
+# ENV IMAGE_NAME=robertmaulana/jenkins_node_example
+# ENV GCR_HOST=https://gcr.io
 
 # Install app dependencies
 # A wildcard is used to ensure both package.json AND package-lock.json are copied
