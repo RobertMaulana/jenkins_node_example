@@ -11,15 +11,21 @@ pipeline {
         stage('Build image') {
             steps {
                 script {
-                    def buildImage = sh "docker build -t ${env.PROJECT_NAME}:${NODE_LABELS}-${tag} ."
+                    buildImage = docker.build("${env.PROJECT_NAME}:${NODE_LABELS}")
                 }
             }
         }
         stage('Push images') {
             docker.withRegistry('https://gcr.io', 'gcr:google-container-registry-project') {
-                myContainer.push("${buildImage}")
-                myContainer.push("${tag}")
+                buildImage.push("${env.PROJECT_NAME}")
+                buildImage.push("${NODE_LABELS}")
             }
         }
+        // stage('Deploy to GKE') {
+        //     steps{
+        //         sh "sed -i 's/hello:latest/hello:${env.BUILD_ID}/g' deployment.yaml"
+        //         step([$class: 'KubernetesEngineBuilder', projectId: env.PROJECT_ID, clusterName: env.CLUSTER_NAME, location: env.LOCATION, manifestPattern: 'deployment.yaml', credentialsId: env.CREDENTIALS_ID, verifyDeployments: true])
+        //     }
+        // }
     }
 }
