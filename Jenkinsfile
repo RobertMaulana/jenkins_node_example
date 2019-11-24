@@ -1,33 +1,6 @@
 // Using git within checkout
 pipeline {
-    // agent any
-    agent {
-        kubernetes {
-            label 'staging'
-            defaultContainer 'jnlp'
-            yaml """
-                apiVersion: v1
-                kind: Pod
-                metadata:
-                labels:
-                component: ci
-                spec:
-                # Use service account that can deploy to all namespaces
-                serviceAccountName: cd-jenkins
-                containers:
-                - name: gcloud
-                  image: gcr.io/cloud-builders/gcloud
-                  command:
-                  - cat
-                  tty: true
-                - name: kubectl
-                  image: gcr.io/cloud-builders/kubectl
-                  command:
-                  - cat
-                  tty: true
-            """
-        }
-    }
+    agent any
     environment {
         PROJECT_NAME = 'jenkins_node_example'
         DISABLE_AUTH = 'true'
@@ -64,13 +37,10 @@ pipeline {
         } 
         stage('Deploy to GKE') {
             steps{
-                container('kubectl') {
-                    sh "sed -i 's/${env.PROJECT_NAME}:latest/${env.PROJECT_NAME}:${tag}/g' deployment.yaml"
-                    step([$class: 'KubernetesEngineBuilder', namespace: env.NAMESPACE, projectId: env.GCR_PROJECT_ID, clusterName: env.CLUSTER_NAME, location: env.LOCATION, manifestPattern: 'deployment.yaml', credentialsId: env.CREDENTIALS_ID, verifyDeployments: true])
-                }
+                sh "sed -i 's/${env.PROJECT_NAME}:latest/${env.PROJECT_NAME}:${tag}/g' deployment.yaml"
+                step([$class: 'KubernetesEngineBuilder', namespace: env.NAMESPACE, projectId: env.GCR_PROJECT_ID, clusterName: env.CLUSTER_NAME, location: env.LOCATION, manifestPattern: 'deployment.yaml', credentialsId: env.CREDENTIALS_ID, verifyDeployments: true])
             }
         }
-
 
         // TODO: push image to GCR
         // stage('Push images') {
