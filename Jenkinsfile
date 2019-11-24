@@ -1,6 +1,32 @@
 // Using git within checkout
 pipeline {
-    agent any
+    // agent any
+    agent {
+    kubernetes {
+        label 'sample-app'
+        defaultContainer 'jnlp'
+        yaml """
+            apiVersion: v1
+            kind: Pod
+            metadata:
+            labels:
+            component: ci
+            spec:
+            # Use service account that can deploy to all namespaces
+            serviceAccountName: cd-jenkins
+            containers:
+            - name: gcloud
+                image: gcr.io/cloud-builders/gcloud
+                command:
+                - cat
+                tty: true
+            - name: kubectl
+                image: gcr.io/cloud-builders/kubectl
+                command:
+                - cat
+                tty: true
+        """
+    }
     environment {
         PROJECT_NAME = 'jenkins_node_example'
         DISABLE_AUTH = 'true'
