@@ -8,6 +8,11 @@ pipeline {
         // GCR_PROJECT_ID   = 'crowde-apps-258709'
     }
     stages {
+        stage("Checkout code") {
+            steps {
+                checkout scm
+            }
+        }
         stage('Build image') {
             steps {
                 script {
