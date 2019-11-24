@@ -32,7 +32,7 @@ pipeline {
                         sh "gcloud auth activate-service-account --key-file ./jenkins-kubernetes-admin.json"
                         sh "gcloud auth configure-docker"
                         echo "Pushing image To GCR"
-                        sh "docker push gcr.io/${env.GCR_PROJECT_ID}/${env.PROJECT_NAME}:${tag}"
+                        sh "docker push ${env.PROJECT_NAME}:${tag}"
                     }
                 }
             }
