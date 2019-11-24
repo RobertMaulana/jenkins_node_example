@@ -29,7 +29,7 @@ pipeline {
                 script {
                     def tag = sh(returnStdout: true, script: "git describe --abbrev=0 --tags | sed 's/* //'").trim()
                     docker.withRegistry('https://gcr.io', 'gcr:staging-project') {
-                        sh "gcloud auth activate-service-account --key-file ./jenkins-kubernetes-admin.json"
+                        sh "gcloud auth activate-service-account --key-file ./jenkins-service-account.json"
                         sh "gcloud auth configure-docker"
                         echo "Pushing image To GCR"
                         sh "docker push ${env.PROJECT_NAME}:${tag}"
