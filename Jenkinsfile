@@ -28,7 +28,7 @@ pipeline {
                 script {
                     def tag = sh(returnStdout: true, script: "git describe --abbrev=0 --tags | sed 's/* //'").trim()
                     docker.withRegistry('https://gcr.io', 'gcr:staging-project') {
-                        buildImage.push("${env.PROJECT_NAME}")
+                        buildImage.push("latest")
                         buildImage.push("${NODE_LABELS}-${tag}")
                     }
                 }
