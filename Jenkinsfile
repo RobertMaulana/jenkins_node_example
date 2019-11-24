@@ -12,7 +12,7 @@ pipeline {
             steps {
                 script {
                     def tag = sh(returnStdout: true, script: "git describe --abbrev=0 --tags | sed 's/* //'").trim()
-                    buildImage = docker.build("${env.PROJECT_NAME}:${NODE_LABELS}-${tag}")
+                    buildImage = docker.build("${env.PROJECT_NAME}:${tag}")
                 }
             }
         }
@@ -32,7 +32,7 @@ pipeline {
                         sh "gcloud auth activate-service-account --key-file ./jenkins-kubernetes-admin.json"
                         sh "gcloud auth configure-docker"
                         echo "Pushing image To GCR"
-                        sh "docker push gcr.io/${env.GCR_PROJECT_ID}/${env.PROJECT_NAME}:${NODE_LABELS}-${tag}"
+                        sh "docker push gcr.io/${env.GCR_PROJECT_ID}/${env.PROJECT_NAME}:${tag}"
                     }
                 }
             }
