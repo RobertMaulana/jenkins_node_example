@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "crowde-apps-258709",
+  "private_key_id": "57906b620875be7c4df3345d3b9620ae4bab9005",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQCqApl3PFpoQ0rE\ngjfmISfNuAxdEENHm6nVMyq1fVA6f6UeJZPpq4OiFykuFrrbQVibnmO/G6ZgU84+\nAZmdgTqE8X+hWi9zsEQw6mM+6gZpM9NN1GqQyJ2J3JNgfe2qfbMZkTI8kTft1+fM\nBkvkAox3h3dSwT6kStRl7BAQD8I/AoGuiLavVm6HBX5nEQXnbvs4iRDkv8O02Cxh\nHf3ivJ3v9/3Mqise8J3orD2/icAodFKdXsOMU7tc//gqwo9fhGnKQ62av2k48v1I\nrOGhcbOSwOh3O8DffDNhR0mO2bvlpCWJKut7IHCVelrdgybrVcwxfSfBKW7hWv2G\n/1rKCiMRAgMBAAECggEACF4HYpRwWKhTMje8e5GPLXNM/HmT7h7NrYYOqI8J1083\n97New8XivSQJrVCGEst1CnexrhK0zhHh2TBn+JYHJMrj/rN7GWUH/iZTCyImfaAE\n2tRFCGovQr097aZU/6qfGXeJcuysxYJ2UJbQvmCXvDxJFaQYKqraKEgFhFzaMRKg\nb2j0+7n3zwOXV8AL4UjiYYWDivielLGuKsh4aftKHBG1dd+Qv/AnKOh/kzIUSuS9\nRPhaeIcWQg7YzG6cxr2KkmjDGHqznDGaiIsMwchQHlMlTKsA2mvhrpinBjGFDU4G\nyU9jZLv21zHQM3T+uGLiLj6HP4uPWZQW69wba54T6QKBgQDdxUQhk0Muz59WI/Fo\n1Zo/VM+h3VIAawkKx+HAHU4PWnOOowU7pQapH+Ympv/2saG/rJloY1d0f9FnQTXo\navjx34OLt+wISH3PiSRZMLwH3wb9T6E/wyd+IsTX9KVU6TryzZiuOLdiSz63hLu4\naI2BJJIJUGyQsu85q1NnGlQOFQKBgQDEQCTsXBbHKJXKBp1SR3ZkeULafm1w9ZRU\nttQYbr8RbsK8QwAKJLh2d0pbiPM6SYp0pSnhOKftFnoYfVa+vM23LUYQkJPMVPWy\nR8LYI3q/iHMxNhqP6y8KNXmLhzFTwNbgezC4WUeOiQpHnbveoH9PNQWq/pUxRKYP\nf9dX/Ta8DQKBgQDFzI1g+OzCErLF7NcDrwidlfJ/J1xdPRpagD7sz/ZwoTdSMDqZ\noS4YqHfpX6gLCxH+WF6XiYtWQC6wTqxbORYC/V1hv9CI7scv1N0To/EBgD3Gr0Be\nE5zk1vQEvZK88iz+pLuaIMIHrJ8qpfuclbwoRErwfcfnI4FVSWbhHc18pQKBgEMc\n3IOoCnIZQwBPusVEgwxhG6e0zKBwm0VNMMMaPGUtx5KyJvVREXQR32/mKaepNpwl\nT2kiAutlYGO3mU6pKoCWDvvjNWgPNea9+7gGiheuBhayNes5tmB7YRGCLjBCJjmm\nZ0bj4UCxRL6xBmpf4KmprEKJxWOP4moygeYpReqRAoGBAIt6sAFecDE358bs/Uxx\ni/LH3IAiAPCBzfIvDEbcfcsQwuHiXazKgG7tjhKISMwwcSxk1J8Ta1ZHxkt6muEk\n35rLxzdFNcD1WqJyei8memelFaFW/iJggYmVrILbkrnpnaCD+wZqNEmQGQMaG3c3\nLAFpEks9zOoeV2OozVqx1g19\n-----END PRIVATE KEY-----\n",
+  "client_email": "jenkins-kubernetes@crowde-apps-258709.iam.gserviceaccount.com",
+  "client_id": "105435947476881596156",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/jenkins-kubernetes%40crowde-apps-258709.iam.gserviceaccount.com"
+}

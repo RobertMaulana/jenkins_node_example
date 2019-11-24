@@ -15,6 +15,14 @@ pipeline {
                 }
             }
         }
+        stage('GCR initialize authentication') {
+            steps {
+                script {
+                    sh "gcloud auth activate-service-account --key-file ./jenkins-kubernetes-admin.json"
+                    sh "gcloud auth configure-docker"
+                }
+            }
+        }
         stage('Push images') {
             steps {
                 script {
