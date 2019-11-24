@@ -20,14 +20,15 @@ pipeline {
                           submoduleCfg: [],
                           userRemoteConfigs: [[url: 'https://github.com/RobertMaulana/jenkins_node_example.git']]
                         ])
-            }
-        stage("Build image") {
+
+                        stage("Build image") {
             steps {
                 script {
                     myapp = docker.build("robertmaulana/${env.PROJECT_NAME}:${params.TAG}")
                 }
             }
         }
+            }
         }
     }
 }
