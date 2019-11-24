@@ -25,7 +25,7 @@ pipeline {
         stage('Build image') {
             steps {
                 script {
-                    myapp = docker.build("robertmaulana/${env.PROJECT_NAME}:${params.TAG}")
+                    myapp = docker.build("robertmaulana/${env.PROJECT_NAME}:${git describe --abbrev=0 --tags | sed 's/* //'}")
                 }
             }
         }
