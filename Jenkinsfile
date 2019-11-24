@@ -6,12 +6,12 @@ pipeline {
         DISABLE_AUTH = 'true'
         DB_ENGINE    = 'sqlite'
     }
-    def tag = sh(returnStdout: true, script: "git describe --abbrev=0 --tags | sed 's/* //'").trim()
     stages {
         stage('Build image') {
             steps {
                 script {
-                    buildImage = docker.build("${env.PROJECT_NAME}:${NODE_LABELS}")
+                    def tag = sh(returnStdout: true, script: "git describe --abbrev=0 --tags | sed 's/* //'").trim()
+                    buildImage = docker.build("${env.PROJECT_NAME}:${NODE_LABELS}-${tag}")
                 }
             }
         }
