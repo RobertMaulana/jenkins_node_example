@@ -15,10 +15,10 @@ template:
   spec:
     containers:
     - name: node-test
-      image: DOCKER-HUB-USERNAME/node-test:latest
+      image: robertmaulana/jenkins_node_example:latest
       imagePullPolicy: Always
       ports:
-      - containerPort: 5000
+      - containerPort: 8081
         name: node-test
 
 ---
@@ -31,7 +31,7 @@ labels:
 spec:
 ports:
   - port: 5000
-    targetPort: 5000
+    targetPort: 8081
 selector:
   app: node-test
   tier: node-test
