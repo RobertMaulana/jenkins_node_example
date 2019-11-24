@@ -26,7 +26,7 @@ pipeline {
         stage('Push images') {
             steps {
                 script {
-                    docker.withRegistry('https://gcr.io', 'gcr:google-container-registry-project') {
+                    docker.withRegistry('https://gcr.io', 'gcr:staging-project') {
                         buildImage.push("${env.PROJECT_NAME}")
                         buildImage.push("${NODE_LABELS}")
                     }
