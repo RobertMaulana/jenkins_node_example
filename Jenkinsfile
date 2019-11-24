@@ -11,7 +11,6 @@ pipeline {
         stage('Build image') {
             steps {
                 script {
-                    def tag = sh(returnStdout: true, script: "git describe --abbrev=0 --tags | sed 's/* //'").trim()
                     def buildImage = sh "docker build -t ${env.PROJECT_NAME}:${NODE_LABELS}-${tag} ."
                 }
             }
