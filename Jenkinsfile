@@ -6,13 +6,20 @@ pipeline {
         DISABLE_AUTH = 'true'
         DB_ENGINE    = 'sqlite'
     }
+    def tag = sh(returnStdout: true, script: "git describe --abbrev=0 --tags | sed 's/* //'").trim()
     stages {
         stage('Build image') {
             steps {
                 script {
                     def tag = sh(returnStdout: true, script: "git describe --abbrev=0 --tags | sed 's/* //'").trim()
-                    sh "docker build -t ${env.PROJECT_NAME}:${NODE_LABELS}-${tag} ."
+                    def buildImage = sh "docker build -t ${env.PROJECT_NAME}:${NODE_LABELS}-${tag} ."
                 }
+            }
+        }
+        stage('Push images') {
+            docker.withRegistry('https://gcr.io', 'gcr:google-container-registry-project') {
+                myContainer.push("${buildImage}")
+                myContainer.push("${tag}")
             }
         }
     }
