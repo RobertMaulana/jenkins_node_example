@@ -5,7 +5,7 @@ pipeline {
         kubernetes {
             label 'sample-app'
             defaultContainer 'jnlp'
-            readFile './buildPod.yaml'
+            readYaml './buildPod.yaml'
         }
     }
     environment {
