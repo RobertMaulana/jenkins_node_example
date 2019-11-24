@@ -1,9 +1,22 @@
+// Using git within checkout
 pipeline {
-    agent { dockerfile true }
+    agent any
+    parameters {
+        gitParameter name: 'TAG',
+                     type: 'PT_TAG',
+                     defaultValue: 'master'
+    }
     stages {
-        stage('Test') {
+        stage('Example') {
             steps {
-                sh 'node --version'
+                checkout([$class: 'GitSCM',
+                          branches: [[name: "${params.TAG}"]],
+                          doGenerateSubmoduleConfigurations: false,
+                          extensions: [],
+                          gitTool: 'Default',
+                          submoduleCfg: [],
+                          userRemoteConfigs: [[url: 'https://github.com/RobertMaulana/jenkins_node_example.git']]
+                        ])
             }
         }
     }

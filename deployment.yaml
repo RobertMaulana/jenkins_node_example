@@ -1,0 +1,38 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+name: node-test
+labels:
+  app: node-test
+spec:
+strategy:
+  type: Recreate
+template:
+  metadata:
+    labels:
+      app: node-test
+      tier: node-test
+  spec:
+    containers:
+    - name: node-test
+      image: DOCKER-HUB-USERNAME/node-test:latest
+      imagePullPolicy: Always
+      ports:
+      - containerPort: 5000
+        name: node-test
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+name: node-test
+labels:
+  app: node-test
+spec:
+ports:
+  - port: 5000
+    targetPort: 5000
+selector:
+  app: node-test
+  tier: node-test
+type: LoadBalancer
