@@ -6,6 +6,9 @@ pipeline {
                      type: 'PT_TAG',
                      defaultValue: 'master'
     }
+    environment {
+        PROJECT_NAME = 'jenkins_node_example'
+    }
     stages {
         stage('Example') {
             steps {
@@ -18,6 +21,13 @@ pipeline {
                           userRemoteConfigs: [[url: 'https://github.com/RobertMaulana/jenkins_node_example.git']]
                         ])
             }
+        stage("Build image") {
+            steps {
+                script {
+                    myapp = docker.build("robertmaulana/${env.PROJECT_NAME}:${params.TAG}")
+                }
+            }
+        }
         }
     }
 }
