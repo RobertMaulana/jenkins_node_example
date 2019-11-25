@@ -24,25 +24,25 @@ pipeline {
                 }
             }
         }
-        // stage('Push images') {
-        //     steps {
-        //         script {
-        //             def tag = sh(returnStdout: true, script: "git describe --abbrev=0 --tags | sed 's/* //'").trim()
-        //             withCredentials([file(credentialsId: 'GCR', variable: 'GCR')]) {
-        //                 sh("gcloud auth activate-service-account --key-file=${GCR}")
-        //                 sh "gcloud auth configure-docker"
-        //                 sh "docker push ${env.PROJECT_NAME}:${tag}"
-        //                 sh "docker push gcr.io/${env.GCR_PROJECT_ID}/${env.PROJECT_NAME}:${tag}"
-        //             }
-        //         }
-        //             // docker.withRegistry('https://gcr.io', 'gcr:staging-project') {
-        //             //     sh "gcloud auth activate-service-account --key-file ./gcr.json"
-        //             //     sh "gcloud auth configure-docker"
-        //             //     echo "Pushing image To GCR"
-        //             //     sh "docker push ${env.PROJECT_NAME}:${tag}"
-        //             // }
-        //     }
-        // }
+        stage('Push images') {
+            steps {
+                script {
+                    def tag = sh(returnStdout: true, script: "git describe --abbrev=0 --tags | sed 's/* //'").trim()
+                    withCredentials([file(credentialsId: 'GCR', variable: 'GCR')]) {
+                        sh("gcloud auth activate-service-account --key-file=${GCR}")
+                        sh "gcloud auth configure-docker"
+                        // sh "docker push ${env.PROJECT_NAME}:${tag}"
+                        sh "docker push gcr.io/${env.GCR_PROJECT_ID}/${env.PROJECT_NAME}:${NODE_LABELS}-${tag}"
+                    }
+                }
+                    // docker.withRegistry('https://gcr.io', 'gcr:staging-project') {
+                    //     sh "gcloud auth activate-service-account --key-file ./gcr.json"
+                    //     sh "gcloud auth configure-docker"
+                    //     echo "Pushing image To GCR"
+                    //     sh "docker push ${env.PROJECT_NAME}:${tag}"
+                    // }
+            }
+        }
         // // stage("Push image") {
         // //     steps {
         // //         script {
