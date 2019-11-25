@@ -32,7 +32,6 @@ pipeline {
                         sh("gcloud auth activate-service-account --key-file=${GCR}")
                         sh "gcloud auth configure-docker"
                         sh "docker login -u _json_key --password-stdin https://gcr.io < gcs.json"
-                        sh "docker push gcr.io/${env.GCR_PROJECT_ID}/${env.PROJECT_NAME}:${NODE_LABELS}-latest"
                         sh "docker push gcr.io/${env.GCR_PROJECT_ID}/${env.PROJECT_NAME}:${NODE_LABELS}-${tag}"
                     }
                 }
