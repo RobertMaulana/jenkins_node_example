@@ -22,7 +22,7 @@ pipeline {
                     def branch = sh(returnStdout: true, script: "${NODE_LABELS}")
                     def tag = sh(returnStdout: true, script: "git describe --abbrev=0 --tags | sed 's/* //'").trim()
                     // buildImage = docker.build("robertmaulana/${env.PROJECT_NAME}:${tag}")
-                    echo branch
+                    echo "${branch}"
                 }
             }
         }
