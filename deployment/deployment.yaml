@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  namespace: staging
+  namespace: NAMESPACE
   name: node-test
   labels:
     app: node-test
@@ -31,7 +31,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  namespace: staging
+  namespace: NAMESPACE
   name: node-test
   labels:
     app: node-test

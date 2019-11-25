@@ -47,7 +47,7 @@ pipeline {
         stage('Deploy Application on K8s') {
             steps {
                 script {
-                    if (NODE_LABELS == 'master') {
+                    if (NODE_LABELS == 'staging') {
                         CLUSTER_NAME = 'staging'
                         NAMESPACE = 'staging'
                     } else {
@@ -58,7 +58,7 @@ pipeline {
                     withCredentials([file(credentialsId: 'GC_KEY', variable: 'GC_KEY')]) {
                         sh("gcloud auth activate-service-account --key-file=${GC_KEY}")
                         sh("gcloud container clusters get-credentials ${CLUSTER_NAME} --zone ${env.LOCATION} --project ${env.GCR_PROJECT_ID}")
-                        sh("sed -e 's|TAG|${tag}|g' deployment/deployment.yaml | kubectl apply -f -")
+                        sh("sed -e 's|TAG|${tag}|g;s|NAMESPACE|${NAMESPACE}|g' deployment/deployment.yaml | kubectl apply -f -")
                         sh "kubectl apply -f deployment/mongo.yaml --namespace ${NAMESPACE}"
                     }
                 }
