@@ -33,7 +33,7 @@ pipeline {
                         sh "gcloud auth configure-docker"
                         sh "docker login -u _json_key --password-stdin https://gcr.io < gcr-admin.json"
                         // sh "docker push ${env.PROJECT_NAME}:${tag}"
-                        // sh "docker push gcr.io/${env.GCR_PROJECT_ID}/${env.PROJECT_NAME}:${NODE_LABELS}-${tag}"
+                        sh "docker push gcr.io/${env.GCR_PROJECT_ID}/${env.PROJECT_NAME}:${NODE_LABELS}-${tag}"
                     }
                 }
                     // docker.withRegistry('https://gcr.io', 'gcr:staging-project') {
