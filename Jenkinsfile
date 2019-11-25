@@ -39,7 +39,7 @@ pipeline {
         } 
 
         stage('Deploy Application on K8s') {
-            container('kubectl'){
+            steps{
                 withKubeConfig([credentialsId: 'staging-project',
                 serverUrl: 'https://104.155.148.152',
                 contextName: 'gke_crowde-apps-258709_us-central1-a_staging',
