@@ -10,7 +10,7 @@ spec:
     matchLabels:
       app: node-test
   strategy:
-    type: Recreate
+    type: RollingUpdate
   replicas: 2
   template:
     metadata:
