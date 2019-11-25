@@ -1,8 +1,6 @@
 // Using git within checkout
 pipeline {
-    agent {
-      label "kubectl"
-    }
+    agent any
     environment {
         PROJECT_NAME = 'jenkins_node_example'
         DISABLE_AUTH = 'true'
