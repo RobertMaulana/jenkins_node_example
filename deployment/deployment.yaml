@@ -11,12 +11,13 @@ spec:
       app: node-test
   strategy:
     type: Recreate
-  replicas: 1
+  replicas: 2
   template:
     metadata:
       labels:
         app: node-test
         tier: node-test
+        role: rolling-update
     spec:
       containers:
       - name: node-test
