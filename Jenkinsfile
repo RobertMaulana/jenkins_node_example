@@ -38,15 +38,19 @@ pipeline {
 
         stage('Deploy Application on K8s') {
             steps {
-                withCredentials([
-                    [
-                        $class: 'StringBinding',
-                        credentialsId: "K8s",
-                        variable: 'GOOGLE_APPLICATION_CREDENTIALS'
-                    ]
-                ]) {
-                    sh 'echo "${GOOGLE_APPLICATION_CREDENTIALS}"'
+                withCredentials([file(credentialsId: 'K8s', variable: 'GC_KEY')]) {
+                    sh("gcloud auth activate-service-account --key-file=${GC_KEY}")
+                    // sh("gcloud container clusters get-credentials prod --zone northamerica-northeast1-a --project ${project}")
                 }
+                // withCredentials([
+                //     [
+                //         $class: 'StringBinding',
+                //         credentialsId: "K8s",
+                //         variable: 'GOOGLE_APPLICATION_CREDENTIALS'
+                //     ]
+                // ]) {
+                //     sh 'echo "${GOOGLE_APPLICATION_CREDENTIALS}"'
+                // }
             }
         }
         // stage('Deploy to GKE') {
