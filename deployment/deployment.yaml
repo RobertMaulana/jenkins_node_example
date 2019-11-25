@@ -19,7 +19,7 @@ spec:
     spec:
       containers:
       - name: node-test
-        image: robertmaulana/jenkins_node_example:latest
+        image: gcr.io/crowde-apps-258709/jenkins_node_example:master-v1.0.79
         imagePullPolicy: Always
         ports:
         - containerPort: 8081
