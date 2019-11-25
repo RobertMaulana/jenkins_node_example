@@ -24,21 +24,21 @@ pipeline {
                 }
             }
         }
-        stage('Push images') {
-            steps {
-                withCredentials([file(credentialsId: 'GCR', variable: 'GCR')]) {
-                    sh("gcloud auth activate-service-account --key-file=${GCR}")
-                    // sh "gcloud auth configure-docker"
-                    // sh "docker push ${env.PROJECT_NAME}:${tag}"
-                }
+        // stage('Push images') {
+        //     steps {
+                // withCredentials([file(credentialsId: 'GCR', variable: 'GCR')]) {
+                //     sh("gcloud auth activate-service-account --key-file=${GCR}")
+                //     // sh "gcloud auth configure-docker"
+                //     // sh "docker push ${env.PROJECT_NAME}:${tag}"
+                // }
                     // docker.withRegistry('https://gcr.io', 'gcr:staging-project') {
                     //     sh "gcloud auth activate-service-account --key-file ./gcr.json"
                     //     sh "gcloud auth configure-docker"
                     //     echo "Pushing image To GCR"
                     //     sh "docker push ${env.PROJECT_NAME}:${tag}"
                     // }
-            }
-        }
+        //     }
+        // }
         // stage("Push image") {
         //     steps {
         //         script {
@@ -50,14 +50,14 @@ pipeline {
         //     }
         // } 
 
-        // stage('Deploy Application on K8s') {
-        //     steps {
-        //         withCredentials([file(credentialsId: 'GC_KEY', variable: 'GC_KEY')]) {
-        //             sh("gcloud auth activate-service-account --key-file=${GC_KEY}")
-        //             sh("gcloud container ${env.CLUSTER_NAME} get-credentials ${env.CLUSTER_NAME} --zone ${env.LOCATION} --project ${env.GCR_PROJECT_ID}")
-        //         }
-        //     }
-        // }
+        stage('Deploy Application on K8s') {
+            steps {
+                withCredentials([file(credentialsId: 'GC_KEY', variable: 'GC_KEY')]) {
+                    sh("gcloud auth activate-service-account --key-file=${GC_KEY}")
+                    sh("gcloud container ${env.CLUSTER_NAME} get-credentials ${env.CLUSTER_NAME} --zone ${env.LOCATION} --project ${env.GCR_PROJECT_ID}")
+                }
+            }
+        }
         // stage('Deploy to GKE') {
         //     steps{
         //         sh "sed -i 's/${env.PROJECT_NAME}:latest/${env.PROJECT_NAME}:${tag}/g' deployment/deployment.yaml"
