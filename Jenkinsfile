@@ -21,9 +21,9 @@ pipeline {
                     String a = GIT_BRANCH;
                     String[] str;
                     str = a.split('/');
-                    
-                    for( String values : str )
-                    println(values);
+                    println(str[2]);
+                    // for( String values : str )
+                    // println(values);
                     // def branch = sh(returnStdout: true, script: "${headBranch} | cut -d '/' -f3")
                     // sh("${GIT_BRANCH} | cut -d '-' -f 1")
                     // def tag = sh(returnStdout: true, script: "git describe --abbrev=0 --tags | sed 's/* //'").trim()
