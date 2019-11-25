@@ -1,6 +1,14 @@
 'use strict';
 
 const express = require('express');
+const MongoClient = require('mongodb').MongoClient;
+
+// Connect to the db
+MongoClient.connect("mongodb://10.8.11.24:27017/node-test", function(err, db) {
+  if(!err) {
+    console.log("We are connected");
+  }
+});
 
 // Constants
 const PORT = 8081;
