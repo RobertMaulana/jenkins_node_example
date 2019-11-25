@@ -8,11 +8,6 @@ pipeline {
         CLUSTER_NAME = 'staging'
         LOCATION = 'us-central1-a'
         CREDENTIALS_ID = 'gke'
-        if (NODE_LABELS == 'master') {
-            NAMESPACE = 'staging'
-        } else {
-            NAMESPACE = 'testing'
-        }
     }
     stages {
         stage("Checkout code") {
@@ -23,6 +18,11 @@ pipeline {
         stage('Build image') {
             steps {
                 script {
+                    if (NODE_LABELS == 'master') {
+                        NAMESPACE = 'staging'
+                    } else {
+                        NAMESPACE = 'testing'
+                    }
                     echo NAMESPACE
                     // def tag = sh(returnStdout: true, script: "git describe --abbrev=0 --tags | sed 's/* //'").trim()
                     // buildImage = docker.build("gcr.io/${env.GCR_PROJECT_ID}/${env.PROJECT_NAME}:${NODE_LABELS}-${tag}")
