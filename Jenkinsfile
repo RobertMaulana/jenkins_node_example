@@ -28,7 +28,7 @@ pipeline {
             steps {
                 withCredentials([file(credentialsId: 'GCR', variable: 'GCR')]) {
                     sh("gcloud auth activate-service-account --key-file=${GCR}")
-                    sh "gcloud auth configure-docker"
+                    // sh "gcloud auth configure-docker"
                     // sh "docker push ${env.PROJECT_NAME}:${tag}"
                 }
                     // docker.withRegistry('https://gcr.io', 'gcr:staging-project') {
