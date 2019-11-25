@@ -17,6 +17,7 @@ pipeline {
         stage('Build image') {
             steps {
                 script {
+                    def tag = sh(returnStdout: true, script: "git describe --abbrev=0 --tags | sed 's/* //'").trim()
                     buildImage = docker.build("gcr.io/${env.GCR_PROJECT_ID}/${env.PROJECT_NAME}:${tag}")
                 }
             }
