@@ -40,7 +40,7 @@ pipeline {
             steps {
                 withCredentials([
                     [
-                        $class: 'FileBinding',
+                        $class: 'StringBinding',
                         credentialsId: "K8s",
                         variable: 'GOOGLE_APPLICATION_CREDENTIALS'
                     ]
