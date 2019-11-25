@@ -38,7 +38,7 @@ pipeline {
             }
         }
         stage('Remove local images') {
-            step {
+            steps {
                 script {
                     def tag = sh(returnStdout: true, script: "git describe --abbrev=0 --tags | sed 's/* //'").trim()
                     // remove docker images
