@@ -5,7 +5,7 @@ metadata:
   labels:
     io.kompose.service: mongodata
   name: mongodata
-  namespace: staging
+  namespace: NAMESPACE
 spec:
   accessModes:
   - ReadWriteOnce
@@ -26,7 +26,7 @@ metadata:
   labels:
     io.kompose.service: mongodb
   name: mongodb
-  namespace: staging
+  namespace: NAMESPACE
 spec:
   replicas: 1
   strategy:
@@ -65,7 +65,7 @@ metadata:
   labels:
     io.kompose.service: mongodb
   name: mongodb
-  namespace: staging
+  namespace: NAMESPACE
 spec:
   ports:
   - name: "27017"
