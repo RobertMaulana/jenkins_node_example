@@ -17,10 +17,11 @@ pipeline {
         stage('Build image') {
             steps {
                 script {
-                    // def branch = sh(returnStdout: true, script: "${GIT_BRANCH} | cut -d '-' -f 1")
-                    sh("${GIT_BRANCH} | cut -d '-' -f 1")
+                    def tag = sh(returnStdout: true, script: "${GIT_BRANCH} | cut -d '/' -f3")
+                    // def branch = sh(returnStdout: true, script: "${headBranch} | cut -d '/' -f3")
+                    // sh("${GIT_BRANCH} | cut -d '-' -f 1")
                     // def tag = sh(returnStdout: true, script: "git describe --abbrev=0 --tags | sed 's/* //'").trim()
-                    // buildImage = docker.build("gcr.io/${env.GCR_PROJECT_ID}/${env.PROJECT_NAME}:${tag}")
+                    buildImage = docker.build("gcr.io/${env.GCR_PROJECT_ID}/${env.PROJECT_NAME}:${tag}")
                 }
             }
         }
