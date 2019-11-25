@@ -40,13 +40,22 @@ pipeline {
         stage('Deploy Application on K8s') {
             steps {
                 script {
+                    def eb() {
+                        echo "
+                            NODE_ENV=staging
+                            RDSPassword=changme
+                            RDSHost=sa1c7quehy7pes5.lolol.us-east-1.rds.amazonaws.com
+                            RDSUsername=derp
+                        "
+                    }
                     def tag = sh(returnStdout: true, script: "git describe --abbrev=0 --tags | sed 's/* //'").trim()
                     withCredentials([file(credentialsId: 'GC_KEY', variable: 'GC_KEY')]) {
                         sh("gcloud auth activate-service-account --key-file=${GC_KEY}")
                         sh("gcloud container clusters get-credentials ${env.CLUSTER_NAME} --zone ${env.LOCATION} --project ${env.GCR_PROJECT_ID}")
                         // sh("export TAG=${tag}")
-                        sh("sed -e 's|TAG|${tag}|BRANCH|${NODE_LABELS}|g' deployment/deployment.yaml | kubectl apply -f -")
-                        // sh "kubectl apply -f deployment/deployment.yaml --namespace ${env.NAMESPACE}"
+                        sh("sed -e 's|TAG|${tag}|g' deployment/deployment.yaml")
+                        sh("sed -e 's|BRANCH|${NODE_LABELS}|g' deployment/deployment.yaml")
+                        sh "kubectl apply -f deployment/deployment.yaml --namespace ${env.NAMESPACE}"
                         sh "kubectl apply -f deployment/mongo.yaml --namespace ${env.NAMESPACE}"
                     }
                 }
