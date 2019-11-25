@@ -17,7 +17,7 @@ pipeline {
         stage('Build image') {
             steps {
                 script {
-                    def branch = sh(returnStdout: true, script: "git branch")
+                    def branch = sh(returnStdout: true, script: "${GIT_BRANCH} | sed -e 's/\/.*\///g'")
                     echo "${branch}"
                     // def tag = sh(returnStdout: true, script: "git describe --abbrev=0 --tags | sed 's/* //'").trim()
                     // buildImage = docker.build("gcr.io/${env.GCR_PROJECT_ID}/${env.PROJECT_NAME}:${tag}")
