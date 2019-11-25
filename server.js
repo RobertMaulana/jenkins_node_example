@@ -9,7 +9,7 @@ const HOST = '0.0.0.0';
 // App
 const app = express();
 app.get('/', (req, res) => {
-  res.send('coba rolling update strategy\n');
+  res.send('delete local docker images\n');
 });
 
 app.listen(PORT, HOST);

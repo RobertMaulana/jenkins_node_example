@@ -37,6 +37,15 @@ pipeline {
                 }
             }
         }
+        stage('Remove local images') {
+            step {
+                script {
+                    def tag = sh(returnStdout: true, script: "git describe --abbrev=0 --tags | sed 's/* //'").trim()
+                    // remove docker images
+                    sh("docker rmi -f gcr.io/${env.GCR_PROJECT_ID}/${env.PROJECT_NAME}:${NODE_LABELS}-${tag} || :")
+                }
+            }
+        }
         stage('Deploy Application on K8s') {
             steps {
                 script {
