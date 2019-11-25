@@ -44,7 +44,7 @@ pipeline {
                     withCredentials([file(credentialsId: 'GC_KEY', variable: 'GC_KEY')]) {
                         sh("gcloud auth activate-service-account --key-file=${GC_KEY}")
                         sh("gcloud container clusters get-credentials ${env.CLUSTER_NAME} --zone ${env.LOCATION} --project ${env.GCR_PROJECT_ID}")
-                        sh "sed -i 's/${tag}/${tag}/g' deployment/deployment.yaml"
+                        sh "sed -i 's/${tag}/v1.0.83/' deployment/deployment.yaml"
                         sh "kubectl apply -f deployment/deployment.yaml --namespace ${env.NAMESPACE}"
                         sh "kubectl apply -f deployment/mongo.yaml --namespace ${env.NAMESPACE}"
                     }
