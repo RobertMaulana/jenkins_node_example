@@ -65,7 +65,7 @@ pipeline {
                         sh("gcloud container clusters get-credentials ${CLUSTER_NAME} --zone ${env.LOCATION} --project ${env.GCR_PROJECT_ID}")
                         sh("kubectl create ns ${NAMESPACE}")
                         sh("sed -e 's|TAG|${tag}|g;s|NAMESPACE|${NAMESPACE}|g' deployment/deployment.yaml | kubectl apply -f -")
-                        sh("sed -e 'ss|NAMESPACE|${NAMESPACE}|g' deployment/mongo.yaml | kubectl apply -f -")
+                        sh("sed -e 's|NAMESPACE|${NAMESPACE}|g' deployment/mongo.yaml | kubectl apply -f -")
                     }
                 }
             }
