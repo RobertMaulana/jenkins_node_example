@@ -38,8 +38,8 @@ pipeline {
 
         stage('Deploy Application on K8s') {
             steps {
-                withCredentials([file(credentialsId: 'K8s', variable: 'GC_KEY')]) {
-                    sh("gcloud auth activate-service-account --key-file=${GC_KEY}")
+                withCredentials([file(credentialsId: 'K8s', variable: 'K8S')]) {
+                    sh("gcloud auth activate-service-account --key-file=${K8S}")
                     // sh("gcloud container clusters get-credentials prod --zone northamerica-northeast1-a --project ${project}")
                 }
                 // withCredentials([
