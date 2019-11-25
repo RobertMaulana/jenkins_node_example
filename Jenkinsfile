@@ -37,20 +37,12 @@ pipeline {
         } 
 
         stage('Deploy Application on K8s') {
-            steps{
-                withKubeConfig([credentialsId: 'staging-project',
-                serverUrl: 'https://104.155.148.152',
-                contextName: 'gke_crowde-apps-258709_us-central1-a_staging',
-                clusterName: 'staging']){
+            steps {
+                withKubeConfig([credentialsId: 'staging-project']) {
                     echo "Hello"
-                    // sh("kubectl apply -f configmap.yml")
-                    // sh("kubectl apply -f secret.yml")
-                    // sh("kubectl apply -f postgres.yml")
-                    // sh("kubectl apply -f ${app1_name}.yml")
-                    // sh("kubectl set image deployment/${app1_name} ${app1_container_name}=${app1_image_tag}")
-                    // sh("kubectl apply -f ${app2_name}.yml")
-                    // sh("kubectl set image deployment/${app2_name} ${app2_container_name}=${app2_image_tag}")
-                }     
+                    // sh 'cat deployment/deployment.yaml | sed "s/{{tag}}/$tag/g" | kubectl apply -f -'
+                    // sh 'kubectl apply -f service.yaml'
+                }
             }
         }
         // stage('Deploy to GKE') {
