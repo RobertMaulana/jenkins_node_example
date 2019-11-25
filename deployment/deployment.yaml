@@ -20,7 +20,7 @@ spec:
     spec:
       containers:
       - name: node-test
-        image: gcr.io/crowde-apps-258709/jenkins_node_example:TAG
+        image: gcr.io/crowde-apps-258709/jenkins_node_example:NODE_LABELS-TAG
         imagePullPolicy: Always
         ports:
         - containerPort: 8081
