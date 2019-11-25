@@ -38,11 +38,12 @@ pipeline {
 
         stage('Deploy Application on K8s') {
             steps {
-                withKubeConfig([credentialsId: 'staging-project']) {
-                    echo "Hello"
+                sh "gcloud container clusters get-credentials staging --zone us-central1-a --project crowde-apps-258709"
+                // withKubeConfig([credentialsId: 'staging-project']) {
+                    // echo "Hello"
                     // sh 'cat deployment/deployment.yaml | sed "s/{{tag}}/$tag/g" | kubectl apply -f -'
                     // sh 'kubectl apply -f service.yaml'
-                }
+                // }
             }
         }
         // stage('Deploy to GKE') {
