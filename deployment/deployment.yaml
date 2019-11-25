@@ -2,39 +2,42 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   namespace: staging
-name: node-test
-labels:
-  app: node-test
+  name: node-test
+  labels:
+    app: node-test
 spec:
-strategy:
-  type: Recreate
-template:
-  metadata:
-    labels:
+  selector:
+    matchLabels:
       app: node-test
-      tier: node-test
-  spec:
-    containers:
-    - name: node-test
-      image: robertmaulana/jenkins_node_example:latest
-      imagePullPolicy: Always
-      ports:
-      - containerPort: 8081
-        name: node-test
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: node-test
+        tier: node-test
+    spec:
+      containers:
+      - name: node-test
+        image: robertmaulana/jenkins_node_example:latest
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 8081
+          name: node-test
 
 ---
 apiVersion: v1
 kind: Service
 metadata:
   namespace: staging
-name: node-test
-labels:
-  app: node-test
+  name: node-test
+  labels:
+    app: node-test
 spec:
-ports:
-  - port: 5000
-    targetPort: 8081
-selector:
-  app: node-test
-  tier: node-test
-type: LoadBalancer
+  ports:
+    - port: 5000
+      targetPort: 8081
+  selector:
+    app: node-test
+    tier: node-test
+  type: LoadBalancer
