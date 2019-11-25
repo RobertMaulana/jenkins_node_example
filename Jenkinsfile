@@ -45,8 +45,8 @@ pipeline {
                         sh("gcloud auth activate-service-account --key-file=${GC_KEY}")
                         sh("gcloud container clusters get-credentials ${env.CLUSTER_NAME} --zone ${env.LOCATION} --project ${env.GCR_PROJECT_ID}")
                         sh("export TAG=${tag}")
-                        sh("envsubst < deployment/deployment.yaml | kubectl apply -f -")
-                        // sh "kubectl apply -f deployment/deployment.yaml --namespace ${env.NAMESPACE}"
+                        // sh("envsubst < deployment/deployment.yaml | kubectl apply -f -")
+                        sh "kubectl apply -f deployment/deployment.yaml --namespace ${env.NAMESPACE}"
                         sh "kubectl apply -f deployment/mongo.yaml --namespace ${env.NAMESPACE}"
                     }
                 }
