@@ -40,14 +40,6 @@ pipeline {
         stage('Deploy Application on K8s') {
             steps {
                 script {
-                    def eb() {
-                        echo "
-                            NODE_ENV=staging
-                            RDSPassword=changme
-                            RDSHost=sa1c7quehy7pes5.lolol.us-east-1.rds.amazonaws.com
-                            RDSUsername=derp
-                        "
-                    }
                     def tag = sh(returnStdout: true, script: "git describe --abbrev=0 --tags | sed 's/* //'").trim()
                     withCredentials([file(credentialsId: 'GC_KEY', variable: 'GC_KEY')]) {
                         sh("gcloud auth activate-service-account --key-file=${GC_KEY}")
