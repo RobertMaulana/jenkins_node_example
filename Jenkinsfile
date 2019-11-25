@@ -39,11 +39,15 @@ pipeline {
         }
         stage('Deploy Application on K8s') {
             steps {
-                withCredentials([file(credentialsId: 'GC_KEY', variable: 'GC_KEY')]) {
-                    sh("gcloud auth activate-service-account --key-file=${GC_KEY}")
-                    sh("gcloud container clusters get-credentials ${env.CLUSTER_NAME} --zone ${env.LOCATION} --project ${env.GCR_PROJECT_ID}")
-                    sh "kubectl apply -f deployment/deployment.yaml --namespace ${env.NAMESPACE}"
-                    sh "kubectl apply -f deployment/mongo.yaml --namespace ${env.NAMESPACE}"
+                script {
+                    def tag = sh(returnStdout: true, script: "git describe --abbrev=0 --tags | sed 's/* //'").trim()
+                    withCredentials([file(credentialsId: 'GC_KEY', variable: 'GC_KEY')]) {
+                        sh("gcloud auth activate-service-account --key-file=${GC_KEY}")
+                        sh("gcloud container clusters get-credentials ${env.CLUSTER_NAME} --zone ${env.LOCATION} --project ${env.GCR_PROJECT_ID}")
+                        sh "sed -i 's/gcr.io/${env.GCR_PROJECT_ID}/${env.PROJECT_NAME}:${NODE_LABELS}-${tag}/gcr.io/${env.GCR_PROJECT_ID}/${env.PROJECT_NAME}:${NODE_LABELS}-${tag}/g' deployment/deployment.yaml"
+                        sh "kubectl apply -f deployment/deployment.yaml --namespace ${env.NAMESPACE}"
+                        sh "kubectl apply -f deployment/mongo.yaml --namespace ${env.NAMESPACE}"
+                    }
                 }
             }
         }
